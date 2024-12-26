@@ -1,0 +1,5 @@
+homepage: "https://stape.io/"
+documentation: "https://github.com/stape-io/yelp-tag"
+versions:
+  - sha: 314e2a19bb136f558492312052f61305b386a72c
+    changeNotes: Initial release.
