@@ -30,151 +30,159 @@ ___TEMPLATE_PARAMETERS___
 
 [
   {
-    "type": "RADIO",
-    "name": "eventType",
-    "displayName": "Event Name Setup Method",
-    "radioItems": [
+    "type": "GROUP",
+    "name": "configGroup",
+    "displayName": "",
+    "groupStyle": "NO_ZIPPY",
+    "subParams": [
       {
-        "value": "standard",
-        "displayValue": "Standard",
-        "subParams": [
+        "type": "RADIO",
+        "name": "eventType",
+        "displayName": "Event Name Setup Method",
+        "radioItems": [
           {
-            "type": "SELECT",
-            "name": "eventNameStandard",
-            "selectItems": [
+            "value": "standard",
+            "displayValue": "Standard",
+            "subParams": [
               {
-                "value": "purchase",
-                "displayValue": "Purchase"
-              },
+                "type": "SELECT",
+                "name": "eventNameStandard",
+                "selectItems": [
+                  {
+                    "value": "purchase",
+                    "displayValue": "Purchase"
+                  },
+                  {
+                    "value": "page_view",
+                    "displayValue": "Page View"
+                  },
+                  {
+                    "value": "add_payment_info",
+                    "displayValue": "Add Payment Info"
+                  },
+                  {
+                    "value": "add_to_cart",
+                    "displayValue": "Add To Cart"
+                  },
+                  {
+                    "value": "add_to_wishlist",
+                    "displayValue": "Add To Wishlist"
+                  },
+                  {
+                    "value": "search",
+                    "displayValue": "Search"
+                  },
+                  {
+                    "value": "checkout",
+                    "displayValue": "Checkout"
+                  },
+                  {
+                    "value": "lead",
+                    "displayValue": "Lead"
+                  },
+                  {
+                    "value": "view_content",
+                    "displayValue": "View Content"
+                  },
+                  {
+                    "value": "view_category",
+                    "displayValue": "View Category"
+                  },
+                  {
+                    "value": "signup",
+                    "displayValue": "SignUp"
+                  },
+                  {
+                    "value": "watch_video",
+                    "displayValue": "Watch Video"
+                  }
+                ],
+                "simpleValueType": true,
+                "defaultValue": "purchase",
+                "displayName": "Event Name",
+                "valueValidators": [
+                  {
+                    "type": "NON_EMPTY"
+                  }
+                ],
+                "alwaysInSummary": true
+              }
+            ]
+          },
+          {
+            "value": "inherit",
+            "subParams": [],
+            "displayValue": "Inherit from client"
+          },
+          {
+            "value": "custom",
+            "subParams": [
               {
-                "value": "page_view",
-                "displayValue": "Page View"
-              },
-              {
-                "value": "add_payment_info",
-                "displayValue": "Add Payment Info"
-              },
-              {
-                "value": "add_to_cart",
-                "displayValue": "Add To Cart"
-              },
-              {
-                "value": "add_to_wishlist",
-                "displayValue": "Add To Wishlist"
-              },
-              {
-                "value": "search",
-                "displayValue": "Search"
-              },
-              {
-                "value": "checkout",
-                "displayValue": "Checkout"
-              },
-              {
-                "value": "lead",
-                "displayValue": "Lead"
-              },
-              {
-                "value": "view_content",
-                "displayValue": "View Content"
-              },
-              {
-                "value": "view_category",
-                "displayValue": "View Category"
-              },
-              {
-                "value": "signup",
-                "displayValue": "SignUp"
-              },
-              {
-                "value": "watch_video",
-                "displayValue": "Watch Video"
+                "type": "TEXT",
+                "name": "eventNameCustom",
+                "displayName": "",
+                "simpleValueType": true
               }
             ],
-            "simpleValueType": true,
-            "defaultValue": "purchase",
-            "displayName": "Event Name",
-            "valueValidators": [
-              {
-                "type": "NON_EMPTY"
-              }
-            ],
-            "alwaysInSummary": true
+            "displayValue": "Custom"
+          }
+        ],
+        "simpleValueType": true,
+        "defaultValue": "standard"
+      },
+      {
+        "type": "SELECT",
+        "name": "eventConversionType",
+        "displayName": "Event Conversion Type",
+        "macrosInSelect": false,
+        "selectItems": [
+          {
+            "value": "website",
+            "displayValue": "Website"
+          },
+          {
+            "value": "physical_store",
+            "displayValue": "Physical Store"
+          },
+          {
+            "value": "app",
+            "displayValue": "Mobile App"
+          }
+        ],
+        "simpleValueType": true,
+        "defaultValue": "website",
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
           }
         ]
       },
       {
-        "value": "inherit",
-        "subParams": [],
-        "displayValue": "Inherit from client"
-      },
-      {
-        "value": "custom",
-        "subParams": [
+        "type": "TEXT",
+        "name": "accessToken",
+        "displayName": "Access Token",
+        "simpleValueType": true,
+        "help": "More info on how to get Access Token \u003ca target\u003d\"_blank\" href\u003d\"https://docs.developer.yelp.com/docs/conversions-api#data-access\"\u003ecan be found by this link\u003c/a\u003e.",
+        "valueValidators": [
           {
-            "type": "TEXT",
-            "name": "eventNameCustom",
-            "displayName": "",
-            "simpleValueType": true
+            "type": "NON_EMPTY"
           }
-        ],
-        "displayValue": "Custom"
-      }
-    ],
-    "simpleValueType": true,
-    "defaultValue": "standard"
-  },
-  {
-    "type": "SELECT",
-    "name": "eventConversionType",
-    "displayName": "Event Conversion Type",
-    "macrosInSelect": false,
-    "selectItems": [
-      {
-        "value": "website",
-        "displayValue": "Website"
+        ]
       },
       {
-        "value": "physical_store",
-        "displayValue": "Physical Store"
+        "type": "CHECKBOX",
+        "name": "useOptimisticScenario",
+        "checkboxText": "Use Optimistic Scenario",
+        "simpleValueType": true,
+        "help": "The tag will call gtmOnSuccess() without waiting for a response from the API. This will speed up sGTM response time however your tag will always return the status fired successfully even in case it is not."
       },
       {
-        "value": "app",
-        "displayValue": "Mobile App"
-      }
-    ],
-    "simpleValueType": true,
-    "defaultValue": "website",
-    "valueValidators": [
-      {
-        "type": "NON_EMPTY"
+        "type": "CHECKBOX",
+        "name": "validate",
+        "checkboxText": "Test Mode",
+        "simpleValueType": true
       }
     ]
-  },
-  {
-    "type": "TEXT",
-    "name": "accessToken",
-    "displayName": "Access Token",
-    "simpleValueType": true,
-    "help": "More info on how to get Access Token \u003ca target\u003d\"_blank\" href\u003d\"https://docs.developer.yelp.com/docs/conversions-api#data-access\"\u003ecan be found by this link\u003c/a\u003e.",
-    "valueValidators": [
-      {
-        "type": "NON_EMPTY"
-      }
-    ]
-  },
-  {
-    "type": "CHECKBOX",
-    "name": "useOptimisticScenario",
-    "checkboxText": "Use Optimistic Scenario",
-    "simpleValueType": true,
-    "help": "The tag will call gtmOnSuccess() without waiting for a response from the API. This will speed up sGTM response time however your tag will always return the status fired successfully even in case it is not."
-  },
-  {
-    "type": "CHECKBOX",
-    "name": "validate",
-    "checkboxText": "Test Mode",
-    "simpleValueType": true
   },
   {
     "displayName": "Server Parameters",
@@ -365,14 +373,13 @@ ___TEMPLATE_PARAMETERS___
   },
   {
     "type": "GROUP",
-    "name": "consentSettingsGroup",
-    "displayName": "Consent Settings",
+    "name": "tagExecutionConsentSettingsGroup",
+    "displayName": "Tag Execution Consent Settings",
     "groupStyle": "ZIPPY_CLOSED",
     "subParams": [
       {
         "type": "RADIO",
         "name": "adStorageConsent",
-        "displayName": "",
         "radioItems": [
           {
             "value": "optional",
@@ -380,7 +387,8 @@ ___TEMPLATE_PARAMETERS___
           },
           {
             "value": "required",
-            "displayValue": "Send data in case marketing consent given"
+            "displayValue": "Send data in case marketing consent given",
+            "help": "Aborts the tag execution if marketing consent (\u003ci\u003ead_storage\u003c/i\u003e Google Consent Mode or Stape\u0027s Data Tag parameter) is not given."
           }
         ],
         "simpleValueType": true,
@@ -422,17 +430,20 @@ ___TEMPLATE_PARAMETERS___
 ___SANDBOXED_JS_FOR_SERVER___
 
 const getAllEventData = require('getAllEventData');
-const JSON = require('JSON');
-const sendHttpRequest = require('sendHttpRequest');
-const getTimestampMillis = require('getTimestampMillis');
 const getContainerVersion = require('getContainerVersion');
-const logToConsole = require('logToConsole');
-const sha256Sync = require('sha256Sync');
-const makeString = require('makeString');
 const getRequestHeader = require('getRequestHeader');
+const getTimestampMillis = require('getTimestampMillis');
 const getType = require('getType');
-const Math = require('Math');
+const JSON = require('JSON');
+const logToConsole = require('logToConsole');
 const makeNumber = require('makeNumber');
+const makeString = require('makeString');
+const Math = require('Math');
+const sendHttpRequest = require('sendHttpRequest');
+const sha256Sync = require('sha256Sync');
+
+/*==============================================================================
+==============================================================================*/
 
 const containerVersion = getContainerVersion();
 const isDebug = containerVersion.debugMode;
@@ -451,6 +462,10 @@ if (url && url.lastIndexOf('https://gtm-msr.appspot.com/', 0) === 0) {
 }
 
 sendTrackRequest(mapEvent(eventData, data));
+
+/*==============================================================================
+  Vendor related functions
+==============================================================================*/
 
 function sendTrackRequest(mappedEvent) {
   const postBody = mappedEvent;
@@ -496,8 +511,8 @@ function sendTrackRequest(mappedEvent) {
     },
     {
       headers: {
-        'Authorization': 'Bearer '+ data.accessToken,
-        'Accept': 'application/json',
+        Authorization: 'Bearer ' + data.accessToken,
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'POST'
@@ -606,13 +621,15 @@ function addCustomData(eventData, mappedData) {
   if (eventData.currency) mappedData.custom_data.currency = eventData.currency;
   else if (currencyFromItems) mappedData.custom_data.currency = currencyFromItems;
 
-  if (eventData.content_category) mappedData.custom_data.content_category = eventData.content_category;
+  if (eventData.content_category)
+    mappedData.custom_data.content_category = eventData.content_category;
   if (eventData.search_term) mappedData.custom_data.search_string = eventData.search_term;
   if (eventData.transaction_id) mappedData.custom_data.order_id = eventData.transaction_id;
 
   if (mappedData.event_name === 'purchase') {
     if (!mappedData.custom_data.currency) mappedData.custom_data.currency = 'USD';
-    if (!mappedData.custom_data.value) mappedData.custom_data.value = valueFromItems ? valueFromItems : 0;
+    if (!mappedData.custom_data.value)
+      mappedData.custom_data.value = valueFromItems ? valueFromItems : 0;
   }
 
   if (data.customDataList) {
@@ -647,47 +664,29 @@ function addServerData(eventData, mappedData) {
   return mappedData;
 }
 
-function isHashed(value) {
-  if (!value) {
-    return false;
-  }
-
-  return makeString(value).match('^[A-Fa-f0-9]{64}$') !== null;
-}
-
-function hashData(value) {
-  if (!value) {
-    return value;
-  }
-
-  const type = getType(value);
-
-  if (type === 'undefined' || value === 'undefined') {
-    return undefined;
-  }
-
-  if (type === 'object') {
-    return value.map((val) => {
-      return hashData(val);
-    });
-  }
-
-  if (isHashed(value)) {
-    return value;
-  }
-
-  return sha256Sync(makeString(value).trim().toLowerCase(), {
-    outputEncoding: 'hex'
-  });
-}
-
 function hashDataIfNeeded(mappedData) {
-  const fieldsToHash = ['em', 'fn', 'ln', 'db', 'ge', 'ph', 'country', 'st', 'zp', 'ct', 'external_id'];
+  const fieldsToHash = [
+    'em',
+    'fn',
+    'ln',
+    'db',
+    'ge',
+    'ph',
+    'country',
+    'st',
+    'zp',
+    'ct',
+    'external_id'
+  ];
   const fieldsToArray = ['em', 'ph', 'country', 'st', 'zp', 'ct', 'external_id'];
 
   for (let key in mappedData.user_data) {
     if (fieldsToHash.indexOf(key) !== -1) {
-      if (fieldsToArray.indexOf(key) !== -1 && (getType(mappedData.user_data[key]) !== 'object' || getType(mappedData.user_data[key]) !== 'array')) {
+      if (
+        fieldsToArray.indexOf(key) !== -1 &&
+        (getType(mappedData.user_data[key]) !== 'object' ||
+          getType(mappedData.user_data[key]) !== 'array')
+      ) {
         mappedData.user_data[key] = [mappedData.user_data[key]];
       }
 
@@ -753,7 +752,10 @@ function addUserData(eventData, mappedData) {
   else if (eventData.userId) mappedData.user_data.external_id = eventData.userId;
 
   if (eventData.ip_override) {
-    mappedData.user_data.client_ip_address = eventData.ip_override.split(' ').join('').split(',')[0];
+    mappedData.user_data.client_ip_address = eventData.ip_override
+      .split(' ')
+      .join('')
+      .split(',')[0];
   }
 
   if (eventData.lead_id) mappedData.user_data.lead_id = eventData.lead_id;
@@ -771,6 +773,43 @@ function addUserData(eventData, mappedData) {
   }
 
   return mappedData;
+}
+
+/*==============================================================================
+  Helpers
+==============================================================================*/
+function isHashed(value) {
+  if (!value) {
+    return false;
+  }
+
+  return makeString(value).match('^[A-Fa-f0-9]{64}$') !== null;
+}
+
+function hashData(value) {
+  if (!value) {
+    return value;
+  }
+
+  const type = getType(value);
+
+  if (type === 'undefined' || value === 'undefined') {
+    return undefined;
+  }
+
+  if (type === 'object') {
+    return value.map((val) => {
+      return hashData(val);
+    });
+  }
+
+  if (isHashed(value)) {
+    return value;
+  }
+
+  return sha256Sync(makeString(value).trim().toLowerCase(), {
+    outputEncoding: 'hex'
+  });
 }
 
 function determinateIsLoggingEnabled() {

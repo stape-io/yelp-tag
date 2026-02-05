@@ -1,15 +1,18 @@
 const getAllEventData = require('getAllEventData');
-const JSON = require('JSON');
-const sendHttpRequest = require('sendHttpRequest');
-const getTimestampMillis = require('getTimestampMillis');
 const getContainerVersion = require('getContainerVersion');
-const logToConsole = require('logToConsole');
-const sha256Sync = require('sha256Sync');
-const makeString = require('makeString');
 const getRequestHeader = require('getRequestHeader');
+const getTimestampMillis = require('getTimestampMillis');
 const getType = require('getType');
-const Math = require('Math');
+const JSON = require('JSON');
+const logToConsole = require('logToConsole');
 const makeNumber = require('makeNumber');
+const makeString = require('makeString');
+const Math = require('Math');
+const sendHttpRequest = require('sendHttpRequest');
+const sha256Sync = require('sha256Sync');
+
+/*==============================================================================
+==============================================================================*/
 
 const containerVersion = getContainerVersion();
 const isDebug = containerVersion.debugMode;
@@ -28,6 +31,10 @@ if (url && url.lastIndexOf('https://gtm-msr.appspot.com/', 0) === 0) {
 }
 
 sendTrackRequest(mapEvent(eventData, data));
+
+/*==============================================================================
+  Vendor related functions
+==============================================================================*/
 
 function sendTrackRequest(mappedEvent) {
   const postBody = mappedEvent;
@@ -73,8 +80,8 @@ function sendTrackRequest(mappedEvent) {
     },
     {
       headers: {
-        'Authorization': 'Bearer '+ data.accessToken,
-        'Accept': 'application/json',
+        Authorization: 'Bearer ' + data.accessToken,
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       method: 'POST'
@@ -183,13 +190,15 @@ function addCustomData(eventData, mappedData) {
   if (eventData.currency) mappedData.custom_data.currency = eventData.currency;
   else if (currencyFromItems) mappedData.custom_data.currency = currencyFromItems;
 
-  if (eventData.content_category) mappedData.custom_data.content_category = eventData.content_category;
+  if (eventData.content_category)
+    mappedData.custom_data.content_category = eventData.content_category;
   if (eventData.search_term) mappedData.custom_data.search_string = eventData.search_term;
   if (eventData.transaction_id) mappedData.custom_data.order_id = eventData.transaction_id;
 
   if (mappedData.event_name === 'purchase') {
     if (!mappedData.custom_data.currency) mappedData.custom_data.currency = 'USD';
-    if (!mappedData.custom_data.value) mappedData.custom_data.value = valueFromItems ? valueFromItems : 0;
+    if (!mappedData.custom_data.value)
+      mappedData.custom_data.value = valueFromItems ? valueFromItems : 0;
   }
 
   if (data.customDataList) {
@@ -224,47 +233,29 @@ function addServerData(eventData, mappedData) {
   return mappedData;
 }
 
-function isHashed(value) {
-  if (!value) {
-    return false;
-  }
-
-  return makeString(value).match('^[A-Fa-f0-9]{64}$') !== null;
-}
-
-function hashData(value) {
-  if (!value) {
-    return value;
-  }
-
-  const type = getType(value);
-
-  if (type === 'undefined' || value === 'undefined') {
-    return undefined;
-  }
-
-  if (type === 'object') {
-    return value.map((val) => {
-      return hashData(val);
-    });
-  }
-
-  if (isHashed(value)) {
-    return value;
-  }
-
-  return sha256Sync(makeString(value).trim().toLowerCase(), {
-    outputEncoding: 'hex'
-  });
-}
-
 function hashDataIfNeeded(mappedData) {
-  const fieldsToHash = ['em', 'fn', 'ln', 'db', 'ge', 'ph', 'country', 'st', 'zp', 'ct', 'external_id'];
+  const fieldsToHash = [
+    'em',
+    'fn',
+    'ln',
+    'db',
+    'ge',
+    'ph',
+    'country',
+    'st',
+    'zp',
+    'ct',
+    'external_id'
+  ];
   const fieldsToArray = ['em', 'ph', 'country', 'st', 'zp', 'ct', 'external_id'];
 
   for (let key in mappedData.user_data) {
     if (fieldsToHash.indexOf(key) !== -1) {
-      if (fieldsToArray.indexOf(key) !== -1 && (getType(mappedData.user_data[key]) !== 'object' || getType(mappedData.user_data[key]) !== 'array')) {
+      if (
+        fieldsToArray.indexOf(key) !== -1 &&
+        (getType(mappedData.user_data[key]) !== 'object' ||
+          getType(mappedData.user_data[key]) !== 'array')
+      ) {
         mappedData.user_data[key] = [mappedData.user_data[key]];
       }
 
@@ -330,7 +321,10 @@ function addUserData(eventData, mappedData) {
   else if (eventData.userId) mappedData.user_data.external_id = eventData.userId;
 
   if (eventData.ip_override) {
-    mappedData.user_data.client_ip_address = eventData.ip_override.split(' ').join('').split(',')[0];
+    mappedData.user_data.client_ip_address = eventData.ip_override
+      .split(' ')
+      .join('')
+      .split(',')[0];
   }
 
   if (eventData.lead_id) mappedData.user_data.lead_id = eventData.lead_id;
@@ -348,6 +342,43 @@ function addUserData(eventData, mappedData) {
   }
 
   return mappedData;
+}
+
+/*==============================================================================
+  Helpers
+==============================================================================*/
+function isHashed(value) {
+  if (!value) {
+    return false;
+  }
+
+  return makeString(value).match('^[A-Fa-f0-9]{64}$') !== null;
+}
+
+function hashData(value) {
+  if (!value) {
+    return value;
+  }
+
+  const type = getType(value);
+
+  if (type === 'undefined' || value === 'undefined') {
+    return undefined;
+  }
+
+  if (type === 'object') {
+    return value.map((val) => {
+      return hashData(val);
+    });
+  }
+
+  if (isHashed(value)) {
+    return value;
+  }
+
+  return sha256Sync(makeString(value).trim().toLowerCase(), {
+    outputEncoding: 'hex'
+  });
 }
 
 function determinateIsLoggingEnabled() {
