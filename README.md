@@ -13,7 +13,12 @@ Yelp CAPI tag automatically normalized and hashed with lowercase hex SHA256 form
 Tag supports event deduplication.
 
 ### Getting started
+
 According to Yelp Conversions API, it is required to use Access Token to send events to Yelp server.
+
+## Useful links:
+
+[Step-by-step guide on how to configure Yelp tag](https://stape.io/blog/yelp-gtm-tag-setup)
 
 ## Open Source
 
