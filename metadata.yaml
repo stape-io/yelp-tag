@@ -1,6 +1,8 @@
 homepage: 'https://stape.io/'
 documentation: 'https://github.com/stape-io/yelp-tag'
 versions:
+  - sha: 2249be8cab74b6b9e24a6891b2c514a29e28fdc5
+    changeNotes: Update event schema and user data mapping section. Improve template UI.
   - sha: 418eaff09b6b3fba4f2e6c9ab9c93e7d162b1220
     changeNotes: Update consent section.
   - sha: 314e2a19bb136f558492312052f61305b386a72c
