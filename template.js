@@ -1,3 +1,4 @@
+const createRegex = require('createRegex');
 const getAllEventData = require('getAllEventData');
 const getContainerVersion = require('getContainerVersion');
 const getRequestHeader = require('getRequestHeader');
@@ -5,9 +6,11 @@ const getTimestampMillis = require('getTimestampMillis');
 const getType = require('getType');
 const JSON = require('JSON');
 const logToConsole = require('logToConsole');
+const makeInteger = require('makeInteger');
 const makeNumber = require('makeNumber');
 const makeString = require('makeString');
 const Math = require('Math');
+const Object = require('Object');
 const sendHttpRequest = require('sendHttpRequest');
 const sha256Sync = require('sha256Sync');
 
@@ -20,17 +23,16 @@ const isLoggingEnabled = determinateIsLoggingEnabled();
 const traceId = getRequestHeader('trace-id');
 
 const eventData = getAllEventData();
-const url = eventData.page_location || getRequestHeader('referer');
 
-if (!isConsentGivenOrNotRequired()) {
-  return data.gtmOnSuccess();
-}
-
-if (url && url.lastIndexOf('https://gtm-msr.appspot.com/', 0) === 0) {
+if (shouldExitEarly(data, eventData)) {
   return data.gtmOnSuccess();
 }
 
 sendTrackRequest(mapEvent(eventData, data));
+
+if (data.useOptimisticScenario) {
+  return data.gtmOnSuccess();
+}
 
 /*==============================================================================
   Vendor related functions
@@ -70,12 +72,10 @@ function sendTrackRequest(mappedEvent) {
           })
         );
       }
+
       if (!data.useOptimisticScenario) {
-        if (statusCode >= 200 && statusCode < 400) {
-          data.gtmOnSuccess();
-        } else {
-          data.gtmOnFailure();
-        }
+        if (statusCode >= 200 && statusCode < 400) return data.gtmOnSuccess();
+        return data.gtmOnFailure();
       }
     },
     {
@@ -90,50 +90,43 @@ function sendTrackRequest(mappedEvent) {
   );
 }
 
-if (data.useOptimisticScenario) {
-  data.gtmOnSuccess();
-}
-
 function getPostUrl() {
   return 'https://api.yelp.com/v3/conversion/event';
 }
 
 function getEventName(eventData, data) {
-  if (data.eventType === 'inherit') {
-    let eventName = eventData.event_name;
+  const addCustomPrefix = (eventName) => {
+    return eventName.indexOf('custom_') === 0 ? eventName : 'custom_' + eventName;
+  };
 
-    let gaToEventName = {
-      page_view: 'page_view',
-      'gtm.dom': 'page_view',
+  if (data.eventType === 'inherit') {
+    const eventName = eventData.event_name;
+    const gaToEventName = {
+      page_view: 'custom_page_view',
+      'gtm.dom': 'custom_page_view',
       add_to_cart: 'add_to_cart',
-      sign_up: 'signup',
       purchase: 'purchase',
-      view_item: 'view_content',
       add_to_wishlist: 'add_to_wishlist',
       begin_checkout: 'checkout',
       add_payment_info: 'add_payment_info',
+      view_item: 'view_content',
       view_item_list: 'view_content',
       search: 'search',
-      generate_lead: 'signup',
-
-      contact: 'lead',
-      find_location: 'search',
+      sign_up: 'signup',
+      generate_lead: 'lead',
 
       'gtm4wp.addProductToCartEEC': 'add_to_cart',
       'gtm4wp.productClickEEC': 'view_content',
-      'gtm4wp.checkoutOptionEEC': 'START_CHECKOUT',
       'gtm4wp.checkoutStepEEC': 'checkout',
       'gtm4wp.orderCompletedEEC': 'purchase'
     };
 
-    if (!gaToEventName[eventName]) {
-      return eventName;
-    }
-
-    return gaToEventName[eventName];
+    return gaToEventName[eventName] || addCustomPrefix(eventName);
   }
 
-  return data.eventType === 'standard' ? data.eventNameStandard : data.eventNameCustom;
+  return data.eventType === 'standard'
+    ? data.eventNameStandard
+    : addCustomPrefix(data.eventNameCustom);
 }
 
 function mapEvent(eventData, data) {
@@ -141,13 +134,17 @@ function mapEvent(eventData, data) {
     user_data: {},
     custom_data: {}
   };
+  const event = {
+    event: mappedData,
+    test_event: data.validate
+  };
 
   mappedData = addServerData(eventData, mappedData);
   mappedData = addUserData(eventData, mappedData);
   mappedData = addCustomData(eventData, mappedData);
   mappedData = hashDataIfNeeded(mappedData);
 
-  return mappedData;
+  return event;
 }
 
 function addCustomData(eventData, mappedData) {
@@ -159,22 +156,23 @@ function addCustomData(eventData, mappedData) {
     currencyFromItems = eventData.items[0].currency;
 
     if (!eventData.items[1]) {
-      if (eventData.items[0].id) mappedData.custom_data.content_ids = [eventData.items[0].item_id];
+      if (eventData.items[0].id)
+        mappedData.custom_data.content_ids = [makeString(eventData.items[0].item_id)];
 
-      if (eventData.items[0].price) {
-        mappedData.custom_data.value = eventData.items[0].quantity
-          ? eventData.items[0].quantity * eventData.items[0].price
-          : eventData.items[0].price;
+      if (isValidValue(eventData.items[0].price)) {
+        const quantity = makeInteger(eventData.items[0].quantity);
+        const price = makeNumber(eventData.items[0].price);
+        mappedData.custom_data.value = quantity ? quantity * price : price;
       }
     }
 
     const itemIdKey = data.itemIdKey ? data.itemIdKey : 'item_id';
-    eventData.items.forEach((d, i) => {
+    eventData.items.forEach((d) => {
       let content = {};
-      if (d[itemIdKey]) content.id = d[itemIdKey];
-      if (d.quantity) content.quantity = d.quantity;
+      if (d[itemIdKey]) content.id = makeString(d[itemIdKey]);
+      if (d.quantity) content.quantity = makeInteger(d.quantity);
 
-      if (d.price) {
+      if (isValidValue(d.price)) {
         content.item_price = makeNumber(d.price);
         valueFromItems += d.quantity ? d.quantity * content.item_price : content.item_price;
       }
@@ -183,17 +181,17 @@ function addCustomData(eventData, mappedData) {
     });
   }
 
-  if (eventData['x-ga-mp1-ev']) mappedData.custom_data.value = eventData['x-ga-mp1-ev'];
-  else if (eventData['x-ga-mp1-tr']) mappedData.custom_data.value = eventData['x-ga-mp1-tr'];
-  else if (eventData.value) mappedData.custom_data.value = eventData.value;
+  const value = eventData['x-ga-mp1-ev'] || eventData['x-ga-mp1-tr'] || eventData.value;
+  if (isValidValue(value)) mappedData.custom_data.value = makeNumber(value);
 
-  if (eventData.currency) mappedData.custom_data.currency = eventData.currency;
-  else if (currencyFromItems) mappedData.custom_data.currency = currencyFromItems;
+  const currency = eventData.currency || currencyFromItems;
+  if (currency) mappedData.custom_data.currency = makeString(currency);
 
   if (eventData.content_category)
     mappedData.custom_data.content_category = eventData.content_category;
   if (eventData.search_term) mappedData.custom_data.search_string = eventData.search_term;
-  if (eventData.transaction_id) mappedData.custom_data.order_id = eventData.transaction_id;
+  if (eventData.transaction_id)
+    mappedData.custom_data.order_id = makeString(eventData.transaction_id);
 
   if (mappedData.event_name === 'purchase') {
     if (!mappedData.custom_data.currency) mappedData.custom_data.currency = 'USD';
@@ -216,11 +214,10 @@ function addServerData(eventData, mappedData) {
   mappedData.event_name = getEventName(eventData, data);
   mappedData.event_time = Math.round(getTimestampMillis() / 1000);
   mappedData.action_source = data.eventConversionType;
-  mappedData.test_event = data.validate;
   mappedData.integration = 'stape';
 
   const eventId = eventData.event_id || eventData.transaction_id;
-  if (eventId) mappedData.event_id = eventId;
+  if (eventId) mappedData.event_id = makeString(eventId);
 
   if (data.serverDataList) {
     data.serverDataList.forEach((d) => {
@@ -231,6 +228,49 @@ function addServerData(eventData, mappedData) {
   }
 
   return mappedData;
+}
+
+function normalizeBasedOnSchemaKey(schemaKey, identifierValue) {
+  const normalizePhoneNumber = (phoneNumber) => {
+    if (!phoneNumber) return phoneNumber;
+    const nonDigitsRegex = createRegex('[^0-9]', 'g');
+    phoneNumber = makeString(phoneNumber).replace(nonDigitsRegex, '');
+    return phoneNumber;
+  };
+  const removeWhiteSpace = (value) => {
+    if (!value) return value;
+    const whiteSpaceRegex = createRegex('\\s', 'g');
+    return makeString(value).replace(whiteSpaceRegex, '');
+  };
+
+  if (!schemaKey || !identifierValue) return identifierValue;
+  if (identifierValue === 'undefined' || identifierValue === 'null') return undefined;
+
+  const type = getType(identifierValue);
+
+  if (type === 'array') {
+    return identifierValue.map((val) => normalizeBasedOnSchemaKey(schemaKey, val));
+  }
+
+  if (type === 'object') {
+    return Object.keys(identifierValue).reduce((acc, val) => {
+      acc[val] = normalizeBasedOnSchemaKey(schemaKey, identifierValue[val]);
+      return acc;
+    }, {});
+  }
+
+  if (isHashed(identifierValue)) return identifierValue;
+
+  switch (schemaKey) {
+    case 'ph':
+      return normalizePhoneNumber(identifierValue);
+    case 'ct':
+    case 'fn':
+    case 'ln':
+      return removeWhiteSpace(identifierValue);
+    default:
+      return identifierValue;
+  }
 }
 
 function hashDataIfNeeded(mappedData) {
@@ -251,14 +291,11 @@ function hashDataIfNeeded(mappedData) {
 
   for (let key in mappedData.user_data) {
     if (fieldsToHash.indexOf(key) !== -1) {
-      if (
-        fieldsToArray.indexOf(key) !== -1 &&
-        (getType(mappedData.user_data[key]) !== 'object' ||
-          getType(mappedData.user_data[key]) !== 'array')
-      ) {
+      const type = getType(mappedData.user_data[key]);
+      if (fieldsToArray.indexOf(key) !== -1 && type !== 'object' && type !== 'array') {
         mappedData.user_data[key] = [mappedData.user_data[key]];
       }
-
+      mappedData.user_data[key] = normalizeBasedOnSchemaKey(key, mappedData.user_data[key]);
       mappedData.user_data[key] = hashData(mappedData.user_data[key]);
     }
   }
@@ -266,12 +303,14 @@ function hashDataIfNeeded(mappedData) {
 }
 
 function addUserData(eventData, mappedData) {
-  let user_data = eventData.user_data || {};
-  let address = user_data.address || {};
+  const user_data = eventData.user_data || {};
+  const address = user_data.address || {};
 
-  if (eventData.email) mappedData.user_data.em = eventData.email;
-  else if (user_data.email_address) mappedData.user_data.em = user_data.email_address;
-  else if (user_data.email) mappedData.user_data.em = user_data.email;
+  const emails = getEmailAddressesFromEventData(eventData);
+  if (emails.length) mappedData.user_data.em = emails;
+
+  const phones = getPhoneNumbersFromEventData(eventData);
+  if (phones.length) mappedData.user_data.ph = phones;
 
   if (eventData.lastName) mappedData.user_data.ln = eventData.lastName;
   else if (eventData.LastName) mappedData.user_data.ln = eventData.LastName;
@@ -294,9 +333,6 @@ function addUserData(eventData, mappedData) {
   if (eventData.gender) mappedData.user_data.ge = eventData.gender;
   else if (eventData.ge) mappedData.user_data.ge = eventData.ge;
   else if (user_data.ge) mappedData.user_data.ge = user_data.ge;
-
-  if (eventData.phone) mappedData.user_data.ph = eventData.phone;
-  else if (user_data.phone_number) mappedData.user_data.ph = user_data.phone_number;
 
   if (eventData.countryCode) mappedData.user_data.country = eventData.countryCode;
   else if (eventData.country) mappedData.user_data.country = eventData.country;
@@ -331,7 +367,11 @@ function addUserData(eventData, mappedData) {
   else if (eventData.leadId) mappedData.user_data.lead_id = eventData.leadId;
 
   if (eventData.user_agent) mappedData.user_data.client_user_agent = eventData.user_agent;
-  if (eventData.madid) mappedData.user_data.madid = eventData.madid;
+
+  const mobileDeviceId = eventData['x-ga-resettable_device_id'];
+  if (mobileDeviceId && mobileDeviceId !== '00000000-0000-0000-0000-000000000000') {
+    mappedData.user_data.madid = mobileDeviceId;
+  }
 
   if (data.userDataList) {
     data.userDataList.forEach((d) => {
@@ -344,41 +384,93 @@ function addUserData(eventData, mappedData) {
   return mappedData;
 }
 
+function getEmailAddressesFromEventData(eventData) {
+  const eventDataUserData = eventData.user_data || {};
+
+  const email =
+    eventDataUserData.email ||
+    eventDataUserData.email_address ||
+    eventDataUserData.sha256_email ||
+    eventDataUserData.sha256_email_address;
+
+  const emailType = getType(email);
+
+  if (emailType === 'string') return [email];
+  else if (emailType === 'array') return email.length > 0 ? email : [];
+  else if (emailType === 'object') {
+    const emailsFromObject = Object.values(email);
+    if (emailsFromObject.length) return emailsFromObject;
+  }
+
+  return [];
+}
+
+function getPhoneNumbersFromEventData(eventData) {
+  const eventDataUserData = eventData.user_data || {};
+
+  const phone =
+    eventDataUserData.phone ||
+    eventDataUserData.phone_number ||
+    eventDataUserData.sha256_phone ||
+    eventDataUserData.sha256_phone_number;
+
+  const phoneType = getType(phone);
+
+  if (phoneType === 'string') return [phone];
+  else if (phoneType === 'array') return phone.length > 0 ? phone : [];
+  else if (phoneType === 'object') {
+    const phonesFromObject = Object.values(phone);
+    if (phonesFromObject.length) return phonesFromObject;
+  }
+
+  return [];
+}
+
 /*==============================================================================
   Helpers
 ==============================================================================*/
-function isHashed(value) {
-  if (!value) {
-    return false;
-  }
 
+function isHashed(value) {
+  if (!value) return false;
   return makeString(value).match('^[A-Fa-f0-9]{64}$') !== null;
 }
 
 function hashData(value) {
-  if (!value) {
-    return value;
-  }
+  if (!value) return value;
 
   const type = getType(value);
 
-  if (type === 'undefined' || value === 'undefined') {
-    return undefined;
+  if (value === 'undefined' || value === 'null') return undefined;
+
+  if (type === 'array') {
+    return value.map((val) => hashData(val));
   }
 
   if (type === 'object') {
-    return value.map((val) => {
-      return hashData(val);
-    });
+    return Object.keys(value).reduce((acc, val) => {
+      acc[val] = hashData(value[val]);
+      return acc;
+    }, {});
   }
 
-  if (isHashed(value)) {
-    return value;
-  }
+  if (isHashed(value)) return value;
 
   return sha256Sync(makeString(value).trim().toLowerCase(), {
     outputEncoding: 'hex'
   });
+}
+
+function shouldExitEarly(data, eventData) {
+  if (!isConsentGivenOrNotRequired(data, eventData)) return true;
+
+  const url = getUrl(eventData);
+  if (url && url.lastIndexOf('https://gtm-msr.appspot.com/', 0) === 0) return true;
+
+  return false;
+}
+
+function getUrl(eventData) {
+  return eventData.page_location || getRequestHeader('referer') || eventData.page_referrer;
 }
 
 function determinateIsLoggingEnabled() {
@@ -397,7 +489,7 @@ function determinateIsLoggingEnabled() {
   return data.logType === 'always';
 }
 
-function isConsentGivenOrNotRequired() {
+function isConsentGivenOrNotRequired(data, eventData) {
   if (data.adStorageConsent !== 'required') return true;
   if (eventData.consent_state) return !!eventData.consent_state.ad_storage;
   const xGaGcs = eventData['x-ga-gcs'] || ''; // x-ga-gcs is a string like "G110"
@@ -406,5 +498,5 @@ function isConsentGivenOrNotRequired() {
 
 function isValidValue(value) {
   const valueType = getType(value);
-  return valueType !== 'null' && valueType !== 'undefined' && value !== '';
+  return valueType !== 'null' && valueType !== 'undefined' && value !== '' && value === value;
 }

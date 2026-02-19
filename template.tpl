@@ -16,7 +16,7 @@ ___INFO___
   "displayName": "Yelp Conversion API",
   "brand": {
     "id": "brand_dummy",
-    "displayName": "Custom Template",
+    "displayName": "stape.io",
     "thumbnail": "data:image/png;base64,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"
   },
   "description": "Tag that send the event data from the GA4/Data client to Yelp Conversion API.",
@@ -32,8 +32,6 @@ ___TEMPLATE_PARAMETERS___
   {
     "type": "GROUP",
     "name": "configGroup",
-    "displayName": "",
-    "groupStyle": "NO_ZIPPY",
     "subParams": [
       {
         "type": "RADIO",
@@ -51,10 +49,6 @@ ___TEMPLATE_PARAMETERS___
                   {
                     "value": "purchase",
                     "displayValue": "Purchase"
-                  },
-                  {
-                    "value": "page_view",
-                    "displayValue": "Page View"
                   },
                   {
                     "value": "add_payment_info",
@@ -112,7 +106,8 @@ ___TEMPLATE_PARAMETERS___
           {
             "value": "inherit",
             "subParams": [],
-            "displayValue": "Inherit from client"
+            "displayValue": "Inherit from client",
+            "help": "Only partial event mapping is provided. Not all GA4 events can be mapped to Yelp supported events.\n\nIf the request follows the \u003cb\u003eGoogle Analytics 4 (GA4)\u003c/b\u003e event naming schema, the following event names will be mapped to Yelp supported event names:\n\u003cbr/\u003e\u003cbr/\u003e \n\u003cul\u003e \n\u003cli\u003epage_view → custom_page_view\u003c/li\u003e\n\u003cli\u003eview_item → view_content\u003c/li\u003e\n\u003cli\u003eview_item_list → view_content\u003c/li\u003e\n\u003cli\u003eadd_to_wishlist → add_to_wishlist\u003c/li\u003e\n\u003cli\u003eadd_to_cart → add_to_cart\u003c/li\u003e\n\u003cli\u003eadd_payment_info → add_payment_info\u003c/li\u003e\n\u003cli\u003ebegin_checkout → checkout\u003c/li\u003e\n\u003cli\u003epurchase → purchase\u003c/li\u003e\n\u003cli\u003esearch → search\u003c/li\u003e\n\u003cli\u003esign_up → signup\u003c/li\u003e\n\u003cli\u003egenerate_lead → lead\u003c/li\u003e\n\u003c/ul\u003e\n\u003cbr/\u003e\nAny other event names will be sent as is. Check the \u003ca href\u003d\"https://docs.developer.yelp.com/docs/conversions-api#configure-ga4-event-schema\"\u003elist of standard event names\u003c/a\u003e."
           },
           {
             "value": "custom",
@@ -120,8 +115,14 @@ ___TEMPLATE_PARAMETERS___
               {
                 "type": "TEXT",
                 "name": "eventNameCustom",
-                "displayName": "",
-                "simpleValueType": true
+                "displayName": "Event Name",
+                "simpleValueType": true,
+                "valueValidators": [
+                  {
+                    "type": "NON_EMPTY"
+                  }
+                ],
+                "help": "Custom events are automatically prefixed with \"\u003ci\u003ecustom_\u003c/i\u003e\"."
               }
             ],
             "displayValue": "Custom"
@@ -162,7 +163,7 @@ ___TEMPLATE_PARAMETERS___
         "name": "accessToken",
         "displayName": "Access Token",
         "simpleValueType": true,
-        "help": "More info on how to get Access Token \u003ca target\u003d\"_blank\" href\u003d\"https://docs.developer.yelp.com/docs/conversions-api#data-access\"\u003ecan be found by this link\u003c/a\u003e.",
+        "help": "More info on how to get Access Token \u003ca target\u003d\"_blank\" href\u003d\"https://docs.developer.yelp.com/docs/conversions-api#data-access\"\u003ecan be found on this page\u003c/a\u003e.",
         "valueValidators": [
           {
             "type": "NON_EMPTY"
@@ -180,14 +181,15 @@ ___TEMPLATE_PARAMETERS___
         "type": "CHECKBOX",
         "name": "validate",
         "checkboxText": "Test Mode",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "help": "When enabled, the API performs all validations as it would under normal operational conditions, yet it prevents the submission of data to the production environment."
       }
     ]
   },
   {
     "displayName": "Server Parameters",
     "name": "serverDataListGroup",
-    "groupStyle": "ZIPPY_CLOSED",
+    "groupStyle": "ZIPPY_OPEN_ON_PARAM",
     "type": "GROUP",
     "subParams": [
       {
@@ -207,7 +209,7 @@ ___TEMPLATE_PARAMETERS___
               },
               {
                 "value": "event_time",
-                "displayValue": "Event Time"
+                "displayValue": "Event Time (Unix Timestamp in seconds)"
               }
             ],
             "isUnique": true,
@@ -236,7 +238,7 @@ ___TEMPLATE_PARAMETERS___
   {
     "displayName": "User Data Parameters",
     "name": "userDataListGroup",
-    "groupStyle": "ZIPPY_CLOSED",
+    "groupStyle": "ZIPPY_OPEN_ON_PARAM",
     "type": "GROUP",
     "subParams": [
       {
@@ -336,13 +338,13 @@ ___TEMPLATE_PARAMETERS___
   {
     "displayName": "Custom Data Parameters",
     "name": "customDataListGroup",
-    "groupStyle": "ZIPPY_CLOSED",
+    "groupStyle": "ZIPPY_OPEN_ON_PARAM",
     "type": "GROUP",
     "subParams": [
       {
         "type": "LABEL",
         "name": "сustomDataLabel",
-        "displayName": "See \u003ca href\u003d\"https://docs.developer.yelp.com/docs/conversions-api#property-descriptions-and-requirements\" target\u003d\"_blank\"\u003ethis documentation\u003c/a\u003e for more details on what data parameters you can add to the call."
+        "displayName": "See \u003ca href\u003d\"https://docs.developer.yelp.com/docs/conversions-api#property-descriptions-and-requirements\" target\u003d\"_blank\"\u003ethis documentation\u003c/a\u003e for more details on what data parameters you can add to the event."
       },
       {
         "name": "customDataList",
@@ -429,6 +431,7 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_SERVER___
 
+const createRegex = require('createRegex');
 const getAllEventData = require('getAllEventData');
 const getContainerVersion = require('getContainerVersion');
 const getRequestHeader = require('getRequestHeader');
@@ -439,6 +442,7 @@ const logToConsole = require('logToConsole');
 const makeNumber = require('makeNumber');
 const makeString = require('makeString');
 const Math = require('Math');
+const Object = require('Object');
 const sendHttpRequest = require('sendHttpRequest');
 const sha256Sync = require('sha256Sync');
 
@@ -451,17 +455,16 @@ const isLoggingEnabled = determinateIsLoggingEnabled();
 const traceId = getRequestHeader('trace-id');
 
 const eventData = getAllEventData();
-const url = eventData.page_location || getRequestHeader('referer');
 
-if (!isConsentGivenOrNotRequired()) {
-  return data.gtmOnSuccess();
-}
-
-if (url && url.lastIndexOf('https://gtm-msr.appspot.com/', 0) === 0) {
+if (shouldExitEarly(data, eventData)) {
   return data.gtmOnSuccess();
 }
 
 sendTrackRequest(mapEvent(eventData, data));
+
+if (data.useOptimisticScenario) {
+  return data.gtmOnSuccess();
+}
 
 /*==============================================================================
   Vendor related functions
@@ -501,12 +504,10 @@ function sendTrackRequest(mappedEvent) {
           })
         );
       }
+
       if (!data.useOptimisticScenario) {
-        if (statusCode >= 200 && statusCode < 400) {
-          data.gtmOnSuccess();
-        } else {
-          data.gtmOnFailure();
-        }
+        if (statusCode >= 200 && statusCode < 400) return data.gtmOnSuccess();
+        return data.gtmOnFailure();
       }
     },
     {
@@ -521,50 +522,43 @@ function sendTrackRequest(mappedEvent) {
   );
 }
 
-if (data.useOptimisticScenario) {
-  data.gtmOnSuccess();
-}
-
 function getPostUrl() {
   return 'https://api.yelp.com/v3/conversion/event';
 }
 
 function getEventName(eventData, data) {
-  if (data.eventType === 'inherit') {
-    let eventName = eventData.event_name;
+  const addCustomPrefix = (eventName) => {
+    return eventName.indexOf('custom_') === 0 ? eventName : 'custom_' + eventName;
+  };
 
-    let gaToEventName = {
-      page_view: 'page_view',
-      'gtm.dom': 'page_view',
+  if (data.eventType === 'inherit') {
+    const eventName = eventData.event_name;
+    const gaToEventName = {
+      page_view: 'custom_page_view',
+      'gtm.dom': 'custom_page_view',
       add_to_cart: 'add_to_cart',
-      sign_up: 'signup',
       purchase: 'purchase',
-      view_item: 'view_content',
       add_to_wishlist: 'add_to_wishlist',
       begin_checkout: 'checkout',
       add_payment_info: 'add_payment_info',
+      view_item: 'view_content',
       view_item_list: 'view_content',
       search: 'search',
-      generate_lead: 'signup',
-
-      contact: 'lead',
-      find_location: 'search',
+      sign_up: 'signup',
+      generate_lead: 'lead',
 
       'gtm4wp.addProductToCartEEC': 'add_to_cart',
       'gtm4wp.productClickEEC': 'view_content',
-      'gtm4wp.checkoutOptionEEC': 'START_CHECKOUT',
       'gtm4wp.checkoutStepEEC': 'checkout',
       'gtm4wp.orderCompletedEEC': 'purchase'
     };
 
-    if (!gaToEventName[eventName]) {
-      return eventName;
-    }
-
-    return gaToEventName[eventName];
+    return gaToEventName[eventName] || addCustomPrefix(eventName);
   }
 
-  return data.eventType === 'standard' ? data.eventNameStandard : data.eventNameCustom;
+  return data.eventType === 'standard'
+    ? data.eventNameStandard
+    : addCustomPrefix(data.eventNameCustom);
 }
 
 function mapEvent(eventData, data) {
@@ -572,13 +566,17 @@ function mapEvent(eventData, data) {
     user_data: {},
     custom_data: {}
   };
+  const event = {
+    event: mappedData,
+    test_event: data.validate
+  };
 
   mappedData = addServerData(eventData, mappedData);
   mappedData = addUserData(eventData, mappedData);
   mappedData = addCustomData(eventData, mappedData);
   mappedData = hashDataIfNeeded(mappedData);
 
-  return mappedData;
+  return event;
 }
 
 function addCustomData(eventData, mappedData) {
@@ -647,11 +645,10 @@ function addServerData(eventData, mappedData) {
   mappedData.event_name = getEventName(eventData, data);
   mappedData.event_time = Math.round(getTimestampMillis() / 1000);
   mappedData.action_source = data.eventConversionType;
-  mappedData.test_event = data.validate;
   mappedData.integration = 'stape';
 
   const eventId = eventData.event_id || eventData.transaction_id;
-  if (eventId) mappedData.event_id = eventId;
+  if (eventId) mappedData.event_id = makeString(eventId);
 
   if (data.serverDataList) {
     data.serverDataList.forEach((d) => {
@@ -662,6 +659,49 @@ function addServerData(eventData, mappedData) {
   }
 
   return mappedData;
+}
+
+function normalizeBasedOnSchemaKey(schemaKey, identifierValue) {
+  const normalizePhoneNumber = (phoneNumber) => {
+    if (!phoneNumber) return phoneNumber;
+    const nonDigitsRegex = createRegex('[^0-9]', 'g');
+    phoneNumber = makeString(phoneNumber).replace(nonDigitsRegex, '');
+    return phoneNumber;
+  };
+  const removeWhiteSpace = (value) => {
+    if (!value) return value;
+    const whiteSpaceRegex = createRegex('\\s', 'g');
+    return makeString(value).replace(whiteSpaceRegex, '');
+  };
+
+  if (!schemaKey || !identifierValue) return identifierValue;
+  if (identifierValue === 'undefined' || identifierValue === 'null') return undefined;
+
+  const type = getType(identifierValue);
+
+  if (type === 'array') {
+    return identifierValue.map((val) => normalizeBasedOnSchemaKey(schemaKey, val));
+  }
+
+  if (type === 'object') {
+    return Object.keys(identifierValue).reduce((acc, val) => {
+      acc[val] = normalizeBasedOnSchemaKey(schemaKey, identifierValue[val]);
+      return acc;
+    }, {});
+  }
+
+  if (isHashed(identifierValue)) return identifierValue;
+
+  switch (schemaKey) {
+    case 'ph':
+      return normalizePhoneNumber(identifierValue);
+    case 'ct':
+    case 'fn':
+    case 'ln':
+      return removeWhiteSpace(identifierValue);
+    default:
+      return identifierValue;
+  }
 }
 
 function hashDataIfNeeded(mappedData) {
@@ -682,14 +722,11 @@ function hashDataIfNeeded(mappedData) {
 
   for (let key in mappedData.user_data) {
     if (fieldsToHash.indexOf(key) !== -1) {
-      if (
-        fieldsToArray.indexOf(key) !== -1 &&
-        (getType(mappedData.user_data[key]) !== 'object' ||
-          getType(mappedData.user_data[key]) !== 'array')
-      ) {
+      const type = getType(mappedData.user_data[key]);
+      if (fieldsToArray.indexOf(key) !== -1 && type !== 'object' && type !== 'array') {
         mappedData.user_data[key] = [mappedData.user_data[key]];
       }
-
+      mappedData.user_data[key] = normalizeBasedOnSchemaKey(key, mappedData.user_data[key]);
       mappedData.user_data[key] = hashData(mappedData.user_data[key]);
     }
   }
@@ -697,12 +734,14 @@ function hashDataIfNeeded(mappedData) {
 }
 
 function addUserData(eventData, mappedData) {
-  let user_data = eventData.user_data || {};
-  let address = user_data.address || {};
+  const user_data = eventData.user_data || {};
+  const address = user_data.address || {};
 
-  if (eventData.email) mappedData.user_data.em = eventData.email;
-  else if (user_data.email_address) mappedData.user_data.em = user_data.email_address;
-  else if (user_data.email) mappedData.user_data.em = user_data.email;
+  const emails = getEmailAddressesFromEventData(eventData);
+  if (emails.length) mappedData.user_data.em = emails;
+
+  const phones = getPhoneNumbersFromEventData(eventData);
+  if (phones.length) mappedData.user_data.ph = phones;
 
   if (eventData.lastName) mappedData.user_data.ln = eventData.lastName;
   else if (eventData.LastName) mappedData.user_data.ln = eventData.LastName;
@@ -725,9 +764,6 @@ function addUserData(eventData, mappedData) {
   if (eventData.gender) mappedData.user_data.ge = eventData.gender;
   else if (eventData.ge) mappedData.user_data.ge = eventData.ge;
   else if (user_data.ge) mappedData.user_data.ge = user_data.ge;
-
-  if (eventData.phone) mappedData.user_data.ph = eventData.phone;
-  else if (user_data.phone_number) mappedData.user_data.ph = user_data.phone_number;
 
   if (eventData.countryCode) mappedData.user_data.country = eventData.countryCode;
   else if (eventData.country) mappedData.user_data.country = eventData.country;
@@ -762,7 +798,11 @@ function addUserData(eventData, mappedData) {
   else if (eventData.leadId) mappedData.user_data.lead_id = eventData.leadId;
 
   if (eventData.user_agent) mappedData.user_data.client_user_agent = eventData.user_agent;
-  if (eventData.madid) mappedData.user_data.madid = eventData.madid;
+
+  const mobileDeviceId = eventData['x-ga-resettable_device_id'];
+  if (mobileDeviceId && mobileDeviceId !== '00000000-0000-0000-0000-000000000000') {
+    mappedData.user_data.madid = mobileDeviceId;
+  }
 
   if (data.userDataList) {
     data.userDataList.forEach((d) => {
@@ -775,41 +815,93 @@ function addUserData(eventData, mappedData) {
   return mappedData;
 }
 
+function getEmailAddressesFromEventData(eventData) {
+  const eventDataUserData = eventData.user_data || {};
+
+  const email =
+    eventDataUserData.email ||
+    eventDataUserData.email_address ||
+    eventDataUserData.sha256_email ||
+    eventDataUserData.sha256_email_address;
+
+  const emailType = getType(email);
+
+  if (emailType === 'string') return [email];
+  else if (emailType === 'array') return email.length > 0 ? email : [];
+  else if (emailType === 'object') {
+    const emailsFromObject = Object.values(email);
+    if (emailsFromObject.length) return emailsFromObject;
+  }
+
+  return [];
+}
+
+function getPhoneNumbersFromEventData(eventData) {
+  const eventDataUserData = eventData.user_data || {};
+
+  const phone =
+    eventDataUserData.phone ||
+    eventDataUserData.phone_number ||
+    eventDataUserData.sha256_phone ||
+    eventDataUserData.sha256_phone_number;
+
+  const phoneType = getType(phone);
+
+  if (phoneType === 'string') return [phone];
+  else if (phoneType === 'array') return phone.length > 0 ? phone : [];
+  else if (phoneType === 'object') {
+    const phonesFromObject = Object.values(phone);
+    if (phonesFromObject.length) return phonesFromObject;
+  }
+
+  return [];
+}
+
 /*==============================================================================
   Helpers
 ==============================================================================*/
-function isHashed(value) {
-  if (!value) {
-    return false;
-  }
 
+function isHashed(value) {
+  if (!value) return false;
   return makeString(value).match('^[A-Fa-f0-9]{64}$') !== null;
 }
 
 function hashData(value) {
-  if (!value) {
-    return value;
-  }
+  if (!value) return value;
 
   const type = getType(value);
 
-  if (type === 'undefined' || value === 'undefined') {
-    return undefined;
+  if (value === 'undefined' || value === 'null') return undefined;
+
+  if (type === 'array') {
+    return value.map((val) => hashData(val));
   }
 
   if (type === 'object') {
-    return value.map((val) => {
-      return hashData(val);
-    });
+    return Object.keys(value).reduce((acc, val) => {
+      acc[val] = hashData(value[val]);
+      return acc;
+    }, {});
   }
 
-  if (isHashed(value)) {
-    return value;
-  }
+  if (isHashed(value)) return value;
 
   return sha256Sync(makeString(value).trim().toLowerCase(), {
     outputEncoding: 'hex'
   });
+}
+
+function shouldExitEarly(data, eventData) {
+  if (!isConsentGivenOrNotRequired(data, eventData)) return true;
+
+  const url = getUrl(eventData);
+  if (url && url.lastIndexOf('https://gtm-msr.appspot.com/', 0) === 0) return true;
+
+  return false;
+}
+
+function getUrl(eventData) {
+  return eventData.page_location || getRequestHeader('referer') || eventData.page_referrer;
 }
 
 function determinateIsLoggingEnabled() {
@@ -828,7 +920,7 @@ function determinateIsLoggingEnabled() {
   return data.logType === 'always';
 }
 
-function isConsentGivenOrNotRequired() {
+function isConsentGivenOrNotRequired(data, eventData) {
   if (data.adStorageConsent !== 'required') return true;
   if (eventData.consent_state) return !!eventData.consent_state.ad_storage;
   const xGaGcs = eventData['x-ga-gcs'] || ''; // x-ga-gcs is a string like "G110"
@@ -837,7 +929,7 @@ function isConsentGivenOrNotRequired() {
 
 function isValidValue(value) {
   const valueType = getType(value);
-  return valueType !== 'null' && valueType !== 'undefined' && value !== '';
+  return valueType !== 'null' && valueType !== 'undefined' && value !== '' && value === value;
 }
 
 
