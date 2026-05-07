@@ -51,3 +51,6 @@ Enter your Yelp Conversions API Access Token. You can find more information on h
 ## Open Source
 
 The **Yelp Tag for GTM Server Side** is developed and maintained by the [Stape Team](https://stape.io/) under the Apache 2.0 license.
+
+### GTM Gallery Status
+🟢 [Listed](https://tagmanager.google.com/gallery/#/owners/stape-io/templates/yelp-tag)
